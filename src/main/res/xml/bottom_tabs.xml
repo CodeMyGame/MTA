@@ -1,0 +1,18 @@
+<tabs>
+    <tab
+        id="@+id/tab_favorites"
+        icon="@drawable/ic_home_black"
+        title="Home" />
+    <tab
+        id="@+id/tab_nearby"
+        icon="@drawable/ic_assignment_black"
+        title="Certification" />
+    <tab
+        id="@+id/tab_courses"
+        icon="@drawable/ic_school"
+        title="Courses" />
+    <tab
+        id="@+id/tab_about"
+        icon="@drawable/ic_info"
+        title="About us" />
+</tabs>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "63577342034",
+    "firebase_url": "https://mtafirebaseproject.firebaseio.com",
+    "project_id": "mtafirebaseproject",
+    "storage_bucket": "mtafirebaseproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:63577342034:android:81dbeacf85482aa2",
+        "android_client_info": {
+          "package_name": "co.mtaindia.mta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "63577342034-l92divj9dbrccng3bpeiiq7ndacvk29o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.mtaindia.mta",
+            "certificate_hash": "6115FB91B746D95655ABDEE21A1A8D5EA87CF4C0"
+          }
+        },
+        {
+          "client_id": "63577342034-jm40g8t78rt0e7ge4o0ijvj3iufnpi6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7b72zCYaEHU8K228EdRZ1-sXKmbBbUXk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "63577342034-jm40g8t78rt0e7ge4o0ijvj3iufnpi6r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

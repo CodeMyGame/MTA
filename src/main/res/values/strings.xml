@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">MTA</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="heading">Microsoft Technology Associate</string>
+    <string name="subheading">Our Training Programs Care about your future</string>
+    <string name="winter_training">Winter Training Program</string>
+    <string name="winter_training_discrp">
+            In Winter training program, MTA India provides better and quality information technology training to the trainees. MTS India has the proactive and experienced trainers for winter training program to provide fundamental knowledge about different courses and how to implement them in the real life corporate world. Our trainers provide better training to the students based on the latest and updated technology which is being used in different IT (Information Technology) industries.
+    </string>
+    <string name="next_winter_heading">Microsoft Winter Training program will conduct for 2 to 3 weeks in which students will get experience about </string>
+    <string name="next_winter_dicrp">
+        -> Handle real-time projects\n
+        -> Real-time business requirement\n
+        -> Implementation of academic education in corporate world\n
+        -> Real-time corporate environment, etc.
+
+        \n\n
+                  During this training program, MTA India will provide your certificate and an official transcript which will definite boost your career and resume. You can apply at any multinational company on the basis of this certificate. It is the golden opportunity to be a part of your dream company. You just have to invest yourself at MTA India. We will validate your knowledge, skills are expertise through different industry-driven training programs with certification courses.
+\n\n
+
+
+                MTA India provides winter training program in Noida, Dehradun, Lucknow, and Kolkata area. Students from BCA, MCA, B.Tech or M.Tech can participate in this certification program.  Different technical courses like Programming in C, C++, PHP, MySQL, Android, .Net, Games Development, Robotics, etc., will be covering during Microsoft winter training program. So register now and achieve your dream. Let MTA India be the path of your success.
+
+    </string>
+    <string name="summer_training">Summer Training Program</string>
+    <string name="summer_training_discrp">
+              Summer is the best time to kick start your career. MTA India is helping you to achieve your dream by providing better and quality result driven Microsoft summer training program. This training program is the best platform to implement the academic education of your current year. Students get opportunity to face the real time situation...
+    </string>
+    <string name="campus_training">Campus Training Program</string>
+    <string name="campus_training_discrp">
+                  Every single product or service is worth only if it is property being used in market or end consumers. Without its use and effect, product or service is worthless. Similarly, a personality is completely worthless if it is not being used perfectly at the right place at right time. A person who cannot express his ideas when it is much required....
+    </string>
+    <string name="learn_more">Learn more</string>
+    <string name="dot_net">bcbcv</string>
+
+    <string name="message_notification_title_template">Message: %1$s</string>
+
+    <!-- TODO: remove this placeholder text -->
+    <string name="message_notification_placeholder_text_template">You said %1$s and lorem ipsum
+        dolor sit amet, consectetur adipiscing elit. Etiam non enim magna. Morbi dictum, velit vel
+        semper venenatis, magna odio volutpat velit, at ullamcorper nulla lacus sed turpis.
+        Pellentesque vitae metus elit, nec tincidunt tellus. Integer sed nisl sem, ullamcorper
+        ornare lacus. Duis ac mauris sed massa congue volutpat. Donec sed erat sit amet turpis
+        viverra rhoncus sit amet nec magna. Donec lacinia ligula at libero volutpat volutpat nec nec
+        tortor.
+    </string>
+
+    <string name="action_share">Share</string>
+    <string name="action_reply">Reply</string>
+
+</resources>

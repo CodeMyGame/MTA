@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_gallary"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="co.mtaindia.mta.Activities.GallaryActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:background="#dadfe4"
+        android:id="@+id/real">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar2"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/logo"
+            android:textSize="20sp"
+            android:text="MTA-INDIA"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/logo"
+            android:layout_toStartOf="@+id/logo"
+            android:id="@+id/imageView4" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/recyclerView"
+        android:layout_below="@+id/real">
+
+</android.support.v7.widget.RecyclerView>
+</RelativeLayout>

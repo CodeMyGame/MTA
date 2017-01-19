@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/tab1"
+    android:background="#f3f5f7"
+    tools:context="co.mtaindia.mta.fragments.tab1">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:background="#dadfe4"
+        android:id="@+id/real">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/logo"
+            android:textSize="20sp"
+            android:text="MTA-INDIA"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_group"
+            android:onClick="registerActivity"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_linked_camera"
+           android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:onClick="gallaryActivity"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/logo"
+            android:layout_toStartOf="@+id/logo"
+            android:id="@+id/imageView4" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleView"
+        android:layout_below="@+id/real"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:scrollbars="vertical"/>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar4"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+
+
+</RelativeLayout>
