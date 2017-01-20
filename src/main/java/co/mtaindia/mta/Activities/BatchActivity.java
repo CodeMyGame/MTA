@@ -1,15 +1,13 @@
-package co.mtaindia.mta.fragments;
+package co.mtaindia.mta.Activities;
 
 import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,38 +20,38 @@ import java.util.HashMap;
 import java.util.List;
 
 import co.mtaindia.mta.R;
-import co.mtaindia.mta.adapters.HomeAdapter;
-import co.mtaindia.mta.beans.HomeBean;
+import co.mtaindia.mta.adapters.BatchAdapter;
+import co.mtaindia.mta.beans.BatchBean;
 
-public class tab3 extends Fragment {
+public class BatchActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
-    private List<HomeBean> mUsers = new ArrayList<>();
-    private HomeAdapter mUserAdapter;
+    private List<BatchBean> mUsers = new ArrayList<>();
+    private BatchAdapter mUserAdapter;
     ProgressBar progressBar;
     DatabaseReference myRef;
-
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_batch);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("mta");
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tab1, container, false);
-        progressBar = (ProgressBar) view.findViewById(R.id.progressBar4);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycleView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mRecyclerView = (RecyclerView)findViewById(R.id.recycleView);
+        GridLayoutManager glm = new GridLayoutManager(this,2);
+        mRecyclerView.setLayoutManager(glm);
         new MyTask().execute();
-        return view;
     }
 
-    private class MyTask extends AsyncTask<String, String, String> {
+    public void moreBatchInfo(View view) {
+        Toast.makeText(this, "comming soon!!!!", Toast.LENGTH_SHORT).show();
+    }
+
+    private class MyTask extends AsyncTask<String,String,String>
+    {
+
         @Override
         protected String doInBackground(String... params) {
-            myRef.child("course").addValueEventListener(new ValueEventListener() {
+            myRef.child("city").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
@@ -62,22 +60,26 @@ public class tab3 extends Fragment {
                         int size = hashMap.size();
                         for (int i = 0; i < size; i++) {
                             HashMap hashMap1 = (HashMap) hashMap.get(i);
-                            HomeBean stu = new HomeBean(hashMap1.get("url").toString(),
-                                    hashMap1.get("heading").toString(),
-                                    hashMap1.get("description").toString());
+                            BatchBean stu = new BatchBean(hashMap1.get("url").toString(),
+                                    hashMap1.get("name").toString());
+
                             mUsers.add(stu);
+
                         }
-                        mUserAdapter = new HomeAdapter(mUsers, getActivity());
+                        mUserAdapter = new BatchAdapter(mUsers,BatchActivity.this);
                         mRecyclerView.setAdapter(mUserAdapter);
                         mUserAdapter.notifyDataSetChanged();
                         progressBar.setVisibility(View.INVISIBLE);
                     }
                 }
 
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
+
                 }
             });
+
             return null;
         }
     }

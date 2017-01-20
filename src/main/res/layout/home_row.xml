@@ -49,7 +49,7 @@
             android:layout_marginBottom="12sp"
             android:layout_marginLeft="8sp"
             android:layout_toRightOf="@+id/button4"
-            android:background="#7bb0e6"
+            android:background="#e27e4f"
             android:onClick="learnmore_summer"
             android:text="@string/learn_more"
             android:textColor="#fff" />
@@ -61,7 +61,7 @@
             android:layout_alignBottom="@+id/button3"
             android:layout_marginLeft="13dp"
             android:layout_marginStart="13dp"
-            android:background="#7bb0e6"
+            android:background="#e27e4f"
             android:onClick="batchesActivity"
             android:text="Batches"
             android:textColor="#fff" />

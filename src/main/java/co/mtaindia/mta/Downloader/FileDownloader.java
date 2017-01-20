@@ -20,15 +20,11 @@ public class FileDownloader {
 
     public static void downloadFile(String fileUrl, File f) {
         try {
-
             URL url = new URL(fileUrl);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.connect();
-
             InputStream inputStream = urlConnection.getInputStream();
             FileOutputStream fileOutputStream = new FileOutputStream(f);
-            int totalSize = urlConnection.getContentLength();
-
             byte[] buffer = new byte[MEGABYTE];
             int bufferLength = 0;
             while ((bufferLength = inputStream.read(buffer)) > 0) {

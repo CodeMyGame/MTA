@@ -33,7 +33,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.GallaryActivity" />
-        <activity android:name=".Activities.RegisterActivity" />
 
         <service android:name=".Services.NotificationService">
             <intent-filter>
@@ -47,9 +46,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".Activities.BatchesActivity">
-
-        </activity>
+        <activity android:name=".Activities.BatchActivity"></activity>
     </application>
 
 </manifest>

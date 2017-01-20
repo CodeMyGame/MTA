@@ -1,28 +1,21 @@
 package co.mtaindia.mta.Activities;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import co.mtaindia.mta.R;
-import co.mtaindia.mta.RecyclerViewPack.GallaryAdapter;
-import co.mtaindia.mta.RecyclerViewPack.GallaryBean;
+import co.mtaindia.mta.adapters.GallaryAdapter;
+import co.mtaindia.mta.beans.GallaryBean;
 
 public class GallaryActivity extends Activity {
 
@@ -51,22 +44,15 @@ public class GallaryActivity extends Activity {
                         progressBar.setVisibility(View.GONE);
                     }
                 }
-
-
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
         recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
-        //StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         LinearLayoutManager llm = new LinearLayoutManager(this);
-        //GridLayoutManager glm = new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(llm);
         recyclerView.setHasFixedSize(true);
         gallaryList = new ArrayList<>();
         adapter = new GallaryAdapter(gallaryList,this);
         recyclerView.setAdapter(adapter);
-
     }
 }

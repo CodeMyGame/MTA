@@ -1,11 +1,8 @@
 package co.mtaindia.mta.Activities;
 import android.Manifest;
-import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Environment;
 import android.support.annotation.IdRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -15,21 +12,15 @@ import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
-
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
-
-import java.io.File;
-
 import co.mtaindia.mta.R;
 import co.mtaindia.mta.fragments.tab1;
 import co.mtaindia.mta.fragments.tab2;
 import co.mtaindia.mta.fragments.tab3;
 
 public class MainActivity extends FragmentActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,8 +48,6 @@ public class MainActivity extends FragmentActivity {
                 fragmentTransaction.replace(R.id.scrollingContent,fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-
-
             }
         });
         bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
@@ -76,7 +65,6 @@ public class MainActivity extends FragmentActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         View v = inflater.inflate(R.layout.learnmore_winter, null);
-
         builder.setView(v)
                 // Add action buttons
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -152,10 +140,6 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void registerActivity(View view) {
-      //  startActivity(new Intent(this,TestAct.class));
-
-       // startService(new Intent(MainActivity.this,NotificationService.class));
-
     }
 
     @Override
@@ -169,7 +153,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void batchesActivity(View view) {
-        startActivity(new Intent(MainActivity.this,BatchesActivity.class));
+        startActivity(new Intent(MainActivity.this,BatchActivity.class));
     }
 
 }

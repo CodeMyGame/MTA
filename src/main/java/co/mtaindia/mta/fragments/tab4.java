@@ -17,6 +17,4 @@ public class tab4 extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tab2, container, false);
     }
-
-
 }
