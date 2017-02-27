@@ -1,26 +1,43 @@
-package co.mtaindia.mta.Activities;
+package co.mtaindia.mta.activities;
+
 import android.Manifest;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Vibrator;
 import android.support.annotation.IdRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
 import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
+
 import co.mtaindia.mta.R;
 import co.mtaindia.mta.fragments.tab1;
 import co.mtaindia.mta.fragments.tab2;
 import co.mtaindia.mta.fragments.tab3;
+import co.mtaindia.mta.fragments.tab4;
 
 public class MainActivity extends FragmentActivity {
+    public static Vibrator vibe;
+    Handler mHandler = new Handler();
+    boolean isRunning = true;
+    private boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnected();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +47,28 @@ public class MainActivity extends FragmentActivity {
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1
             );
         }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                while (isRunning) {
+                    try {
+                        Thread.sleep(10000);
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!isNetworkAvailable()) {
+                                    Toast.makeText(MainActivity.this, "Check your network connection!!!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    } catch (Exception e) {
+                        Toast.makeText(MainActivity.this,e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }).start();
+        vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
@@ -37,12 +76,19 @@ public class MainActivity extends FragmentActivity {
                 Fragment fragment ;
                 if (tabId == R.id.tab_favorites) {
                    fragment = new tab1();
+                    vibe.vibrate(12);
                 }
                 else if(tabId==R.id.tab_nearby){
                     fragment = new tab2();
+                    vibe.vibrate(12);
                 }
-                else {
+                else if(tabId==R.id.tab_about) {
+                    fragment = new tab4();
+                    vibe.vibrate(12);
+                }
+                else{
                     fragment = new tab3();
+                    vibe.vibrate(12);
                 }
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.scrollingContent,fragment);
@@ -50,61 +96,8 @@ public class MainActivity extends FragmentActivity {
                 fragmentTransaction.commit();
             }
         });
-        bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
-            @Override
-            public void onTabReSelected(@IdRes int tabId) {
-                if (tabId == R.id.tab_favorites) {
-
-                }
-            }
-        });
     }
 
-
-    public void learnmore_winter(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View v = inflater.inflate(R.layout.learnmore_winter, null);
-        builder.setView(v)
-                // Add action buttons
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                    }
-                })
-                .setPositiveButton("Insert", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-
-                    }
-                });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
-    public void learnmore_summer(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View v = inflater.inflate(R.layout.learnmore_winter, null);
-
-        builder.setView(v)
-                // Add action buttons
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                    }
-                })
-                .setPositiveButton("Insert", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-
-                    }
-                });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
 
     @Override
     public void onBackPressed() {
@@ -112,48 +105,61 @@ public class MainActivity extends FragmentActivity {
 
     }
 
-    public void learnmore_campus(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View v = inflater.inflate(R.layout.learnmore_winter, null);
-
-        builder.setView(v)
-                // Add action buttons
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                    }
-                })
-                .setPositiveButton("Register here", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-
-                    }
-                });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
     public void gallaryActivity(View view) {
+        vibe.vibrate(12);
         startActivity(new Intent(this,GallaryActivity.class));
     }
 
     public void registerActivity(View view) {
+        vibe.vibrate(12);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View v = inflater.inflate(R.layout.loginsignup, null);
+        Button signup = (Button)v.findViewById(R.id.signup);
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                vibe.vibrate(15);
+                Intent intent = new Intent(MainActivity.this,WebViewActivity.class);
+                intent.putExtra("url","http://mtaindia.co/Registration.aspx");
+                startActivity(intent);
+            }
+        });
+        Button login = (Button)v.findViewById(R.id.login);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                vibe.vibrate(15);
+                Intent intent = new Intent(MainActivity.this,WebViewActivity.class);
+                intent.putExtra("url","http://mtaindia.co/Registration.aspx");
+                startActivity(intent);
+            }
+        });
+        Button grp = (Button)v.findViewById(R.id.grp);
+        grp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                vibe.vibrate(15);
+                Intent intent = new Intent(MainActivity.this,WebViewActivity.class);
+                intent.putExtra("url","http://mtaindia.co/Group-Discount.aspx");
+                startActivity(intent);
+            }
+        });
+        Button con = (Button)v.findViewById(R.id.contact);
+        con.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                vibe.vibrate(15);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+                View v = inflater.inflate(R.layout.contact, null);
+                builder.setView(v);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+        builder.setView(v);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    public void batchesActivity(View view) {
-        startActivity(new Intent(MainActivity.this,BatchActivity.class));
-    }
-
 }

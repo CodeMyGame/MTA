@@ -6,8 +6,8 @@ package co.mtaindia.mta.beans;
 
 public class HomeBean {
     public String url;
-    public String heading;
-    public String description;
+    private String heading;
+    private String description;
 
     public HomeBean(String url, String heading, String description) {
         this.url = url;

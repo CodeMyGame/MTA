@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +16,7 @@
         android:theme="@style/MyMaterialTheme">
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_group" />
+            android:resource="@drawable/mta" />
         <!--
              Set color used with incoming notification messages. This is used when no color is set for the incoming
              notification message. See README(https://goo.gl/6BKBk7) for more.
@@ -25,28 +25,49 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
 
-        <activity android:name=".Activities.MainActivity">
+        <activity
+            android:name=".activities.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.GallaryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.CityActivity"
+            android:parentActivityName=".activities.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.WebViewActivity" />
+        <activity
+            android:name=".activities.WelcomeActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.GallaryActivity" />
+        <activity
+            android:name=".activities.CourseNextActivity"
+            android:label="@string/title_activity_course_next"
+            android:theme="@style/MyMaterialTheme" />
+        <activity
+            android:name=".activities.HomeNextActivity"
+            android:label="@string/title_activity_home_next"
+            android:theme="@style/MyMaterialTheme" />
+        <activity
+            android:name=".activities.HomeActivity"
+            android:label="@string/title_activity_home_next"
+            android:theme="@style/MyMaterialTheme" />
 
-        <service android:name=".Services.NotificationService">
+        <service android:name=".activities.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <receiver android:name=".Recievers.BootReciever">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
-        <activity android:name=".Activities.BatchActivity"></activity>
+        <activity android:name=".activities.QuizActivity" />
+        <activity android:name=".activities.StudyActivity" />
+        <activity android:name=".activities.QuizNextActivity" />
+        <activity android:name=".activities.StudyNextActivity"></activity>
     </application>
 
 </manifest>

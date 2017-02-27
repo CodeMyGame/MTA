@@ -6,9 +6,9 @@ package co.mtaindia.mta.beans;
 
 public class CertificationBean {
     public String url;
-    public String heading;
-    public String description;
-    public String code;
+    private String heading;
+    private String description;
+    private String code;
 
     public CertificationBean(String url, String heading, String description, String code) {
         this.url = url;

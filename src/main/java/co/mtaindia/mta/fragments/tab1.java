@@ -1,18 +1,24 @@
 package co.mtaindia.mta.fragments;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,48 +30,69 @@ import java.util.HashMap;
 import java.util.List;
 
 import co.mtaindia.mta.R;
+import co.mtaindia.mta.activities.HomeNextActivity;
+import co.mtaindia.mta.activities.WebViewActivity;
 import co.mtaindia.mta.adapters.HomeAdapter;
-import co.mtaindia.mta.beans.HomeBean;
 import co.mtaindia.mta.adapters.Home_horizontalAdapter;
+import co.mtaindia.mta.beans.HomeBean;
 import co.mtaindia.mta.beans.Home_horizontalBean;
 
-public class tab1 extends Fragment {
-    private RecyclerView mRecyclerView, mRecyclerViewHori;
+public class tab1 extends Fragment implements HomeAdapter.ClickListener {
+    public static Drawable drawable;
+    ProgressBar progressBar;
+    DatabaseReference myRef;
     private List<HomeBean> mUsers = new ArrayList<>();
     private List<Home_horizontalBean> mUsersH = new ArrayList<>();
     private HomeAdapter mUserAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private Home_horizontalAdapter home_horizontalAdapter;
-    ProgressBar progressBar;
-    DatabaseReference myRef;
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("mta");
         View view = inflater.inflate(R.layout.fragment_tab2, container, false);
+        MobileAds.initialize(getActivity(), "ca-app-pub-9222742110210874~4642331143");
+        AdView mAdView = (AdView) view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar4);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycleView);
-        mRecyclerViewHori = (RecyclerView) view.findViewById(R.id.recycleViewHorizontal);
+        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.recycleView);
+        RecyclerView mRecyclerViewHori = (RecyclerView) view.findViewById(R.id.recycleViewHorizontal);
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerViewHori.setLayoutManager(layoutManager);
         mUserAdapter = new HomeAdapter(mUsers, getActivity());
+        mUserAdapter.setClickListener(this);
         mRecyclerView.setAdapter(mUserAdapter);
         home_horizontalAdapter = new Home_horizontalAdapter(mUsersH, getActivity());
+        home_horizontalAdapter.setClickListener(new Home_horizontalAdapter.ClickListener() {
+            @Override
+            public void itemClicked(View v, int position) {
+                Intent intent = new Intent(getContext(), WebViewActivity.class);
+                startActivity(intent);
+            }
+        });
         mRecyclerViewHori.setAdapter(home_horizontalAdapter);
         new MyTask().execute();
         return view;
 
 
+    }
+
+    @Override
+    public void itemClicked(View v, int position) {
+        Intent intent = new Intent(getContext(), HomeNextActivity.class);
+        ImageView imageView = (ImageView) v.findViewById(R.id.head_img);
+        intent.putExtra("position", position);
+        TextView textView = (TextView) v.findViewById(R.id.heading_summer);
+        drawable = imageView.getDrawable();
+        intent.putExtra("name", textView.getText().toString());
+        ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), imageView, "mytransition");
+        startActivity(intent, activityOptionsCompat.toBundle());
     }
 
     private class MyTask extends AsyncTask<String, String, String> {

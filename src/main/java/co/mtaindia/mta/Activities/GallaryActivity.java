@@ -1,4 +1,4 @@
-package co.mtaindia.mta.Activities;
+package co.mtaindia.mta.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,13 +6,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import co.mtaindia.mta.R;
 import co.mtaindia.mta.adapters.GallaryAdapter;
 import co.mtaindia.mta.beans.GallaryBean;
@@ -55,4 +58,16 @@ public class GallaryActivity extends Activity {
         adapter = new GallaryAdapter(gallaryList,this);
         recyclerView.setAdapter(adapter);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.transition.slideenterup,R.transition.slideexitup);
+    }
+
+    public void return2Home(View view) {
+        HomeActivity.vibe.vibrate(15);
+        onBackPressed();
+    }
+
 }

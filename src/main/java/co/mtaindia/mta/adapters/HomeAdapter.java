@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
-import co.mtaindia.mta.Picasso.AnimationUtils;
-import co.mtaindia.mta.Picasso.PicasoClient;
 import co.mtaindia.mta.R;
 import co.mtaindia.mta.beans.HomeBean;
 
@@ -21,26 +21,15 @@ import co.mtaindia.mta.beans.HomeBean;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
     private List<HomeBean> gallaryList;
-    int previousPosition = 0;
-    Context context;
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvHeading;
-        public TextView tvDescription;
-        public ImageView imageView;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            tvHeading = (TextView) itemView.findViewById(R.id.heading_summer);
-            tvDescription = (TextView) itemView.findViewById(R.id.descrp_summer);
-            imageView = (ImageView) itemView.findViewById(R.id.head_img);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        }
-    }
-
+    private Context context;
+    private HomeAdapter.ClickListener clickListener;
     public HomeAdapter(List<HomeBean> gList, Context c) {
         this.gallaryList = gList;
         this.context = c;
+    }
+
+    public void setClickListener(HomeAdapter.ClickListener clickListener) {
+        this.clickListener = clickListener;
     }
 
     @Override
@@ -51,28 +40,46 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(HomeAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(HomeAdapter.MyViewHolder holder, final int position) {
         HomeBean gallary = gallaryList.get(position);
         holder.tvHeading.setText(gallary.getHeading());
         holder.tvDescription.setText(gallary.getDescription());
-        PicasoClient.downLoadImg(context, gallaryList.get(position).url, holder.imageView);
-        if (position > previousPosition) {
-            AnimationUtils.animate(holder, true);
-        } else {
-            AnimationUtils.animate(holder, false);
-        }
-        previousPosition = position;
-        if (position > previousPosition) {
-            AnimationUtils.animate(holder, true);
-        } else {
-            AnimationUtils.animate(holder, false);
-        }
-        previousPosition = position;
-
+        Glide.with(context)
+                .load(gallaryList.get(position).url)
+                .placeholder(R.drawable.image_no)
+                .crossFade()
+                .into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
         return gallaryList.size();
+    }
+
+    public interface ClickListener {
+        void itemClicked(View v, int position);
+    }
+
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public ImageView imageView;
+        TextView tvHeading;
+        TextView tvDescription;
+
+        MyViewHolder(View itemView) {
+            super(itemView);
+            tvHeading = (TextView) itemView.findViewById(R.id.heading_summer);
+            tvDescription = (TextView) itemView.findViewById(R.id.descrp_summer);
+            imageView = (ImageView) itemView.findViewById(R.id.head_img);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (clickListener != null) {
+                clickListener.itemClicked(v, getPosition());
+            }
+        }
+
     }
 }

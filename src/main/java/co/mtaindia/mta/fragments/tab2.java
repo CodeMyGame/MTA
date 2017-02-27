@@ -26,11 +26,11 @@ import co.mtaindia.mta.adapters.CertificationAdapter;
 import co.mtaindia.mta.beans.CertificationBean;
 
 public class tab2 extends Fragment {
+    ProgressBar progressBar;
+    DatabaseReference myRef;
     private RecyclerView mRecyclerView;
     private List<CertificationBean> mUsers = new ArrayList<>();
     private CertificationAdapter mUserAdapter;
-    ProgressBar progressBar;
-    DatabaseReference myRef;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

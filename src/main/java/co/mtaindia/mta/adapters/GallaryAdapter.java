@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
-import co.mtaindia.mta.Picasso.AnimationUtils;
-import co.mtaindia.mta.Picasso.PicasoClient;
 import co.mtaindia.mta.R;
 import co.mtaindia.mta.beans.GallaryBean;
 
@@ -20,19 +20,7 @@ import co.mtaindia.mta.beans.GallaryBean;
 
 public class GallaryAdapter extends RecyclerView.Adapter<GallaryAdapter.MyViewHolder> {
     private List<GallaryBean> gallaryList;
-    int previousPosition = 0;
-    Context context;
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
-
-        public MyViewHolder(View view) {
-            super(view);
-            imageView = (ImageView) view.findViewById(R.id.imageView);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        }
-    }
-
+    private Context context;
 
     public GallaryAdapter(List<GallaryBean> gList, Context c) {
         this.gallaryList = gList;
@@ -48,24 +36,27 @@ public class GallaryAdapter extends RecyclerView.Adapter<GallaryAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        PicasoClient.downLoadImg(context, gallaryList.get(position).url, holder.imageView);
-        if (position > previousPosition) {
-            AnimationUtils.animate(holder, true);
-        } else {
-            AnimationUtils.animate(holder, false);
-        }
-        previousPosition = position;
-        if (position > previousPosition) {
-            AnimationUtils.animate(holder, true);
-        } else {
-            AnimationUtils.animate(holder, false);
-        }
-        previousPosition = position;
+        Glide
+                .with(context)
+                .load(gallaryList.get(position).url)
+                .placeholder(R.drawable.image_no)
+                .crossFade()
+                .into(holder.imageView);
 
     }
 
     @Override
     public int getItemCount() {
         return gallaryList.size();
+    }
+
+    class MyViewHolder extends RecyclerView.ViewHolder {
+        ImageView imageView;
+
+        MyViewHolder(View view) {
+            super(view);
+            imageView = (ImageView) view.findViewById(R.id.imageView);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        }
     }
 }

@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_margin="5dp"
-    card_view:cardCornerRadius="7dp"
     card_view:cardElevation="5dp"
     card_view:cardPreventCornerOverlap="false">
 
@@ -25,26 +24,26 @@
             android:id="@+id/title_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/head_img"
+            android:layout_toLeftOf="@+id/moreinfo"
             android:padding="13sp"
             android:text="Dehradun"
             android:textColor="#5c5c7b"
-            android:textSize="20sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="80sp"
-            android:layout_height="30sp"
-            android:layout_alignBaseline="@+id/title_city"
-            android:layout_alignBottom="@+id/title_city"
+        <ImageView
+            android:id="@+id/moreinfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="9dp"
-            android:layout_marginRight="9dp"
-            android:background="#e27e4f"
-            android:onClick="moreBatchInfo"
-            android:text="More"
-            android:textColor="#fff" />
+            android:layout_below="@+id/head_img"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="11dp"
+            android:src="@drawable/ic_info_black" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

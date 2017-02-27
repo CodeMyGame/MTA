@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:src="@drawable/ic_group" />
+
+    <TextView
+        android:id="@+id/coursename"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/duration"
+        android:layout_alignLeft="@+id/duration"
+        android:layout_alignStart="@+id/duration"
+        android:layout_toLeftOf="@+id/totalbatches"
+        android:layout_toStartOf="@+id/totalbatches"
+        android:text="Core JAVA"
+        android:textColor="#735f5f"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/totalfee"
+        android:layout_marginLeft="80dp"
+        android:text="Duration : 4-6 weeks"
+        android:textColor="#d73f1c" />
+
+    <TextView
+        android:id="@+id/totalbatches"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:text="Total batches : 12"
+        android:textColor="#f10018" />
+
+    <TextView
+        android:id="@+id/totalfee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_alignEnd="@+id/totalbatches"
+        android:layout_alignRight="@+id/totalbatches"
+        android:text="Fee : 12000/-"
+        android:textColor="#0868c9" />
+
+    <TextView
+        android:id="@+id/registered"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_alignLeft="@+id/duration"
+        android:layout_alignStart="@+id/duration"
+        android:text="Registered : 100" />
+
+</RelativeLayout>

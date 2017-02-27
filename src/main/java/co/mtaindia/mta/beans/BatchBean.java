@@ -6,7 +6,7 @@ package co.mtaindia.mta.beans;
 
 public class BatchBean {
     public String url;
-    public String heading;
+    private String heading;
 
     public BatchBean(String url, String heading) {
         this.url = url;
@@ -25,7 +25,4 @@ public class BatchBean {
         return heading;
     }
 
-    public void setHeading(String name) {
-        this.heading = name;
-    }
 }

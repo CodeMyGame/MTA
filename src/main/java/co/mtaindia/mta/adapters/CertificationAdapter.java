@@ -2,8 +2,12 @@ package co.mtaindia.mta.adapters;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,8 +31,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-import co.mtaindia.mta.Picasso.AnimationUtils;
-import co.mtaindia.mta.Picasso.PicasoClient;
 import co.mtaindia.mta.R;
 import co.mtaindia.mta.beans.CertificationBean;
 
@@ -37,29 +40,10 @@ import co.mtaindia.mta.beans.CertificationBean;
 
 public class CertificationAdapter extends RecyclerView.Adapter<CertificationAdapter.MyViewHolder> {
     private List<CertificationBean> gallaryList;
-    int previousPosition = 0;
-    boolean isclick = false;
-    Context context;
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvHeading;
-        public TextView tvDescription;
-        public TextView tvCode;
-        public ImageView imageView;
-        public ImageView imageViewDownload;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            tvHeading = (TextView) itemView.findViewById(R.id.title);
-            tvDescription = (TextView) itemView.findViewById(R.id.description);
-            tvCode = (TextView) itemView.findViewById(R.id.code);
-            imageView = (ImageView) itemView.findViewById(R.id.imageView);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            imageViewDownload = (ImageView) itemView.findViewById(R.id.imgdownload);
-
-        }
-    }
-
+    private boolean isclick = false;
+    private Context context;
+    private int certificate_position;
+    private View view;
     public CertificationAdapter(List<CertificationBean> gList, Context c) {
         this.gallaryList = gList;
         this.context = c;
@@ -79,34 +63,33 @@ public class CertificationAdapter extends RecyclerView.Adapter<CertificationAdap
         holder.tvHeading.setText(gallary.getHeading());
         holder.tvDescription.setText(gallary.getDescription());
         holder.tvCode.setText("Exam code : " + gallary.getCode());
-        PicasoClient.downLoadImg(context, gallaryList.get(position).url, holder.imageView);
-        if (position > previousPosition) {
-            AnimationUtils.animate(holder, true);
-        } else {
-            AnimationUtils.animate(holder, false);
-        }
-        previousPosition = position;
-        if (position > previousPosition) {
-            AnimationUtils.animate(holder, true);
-        } else {
-            AnimationUtils.animate(holder, false);
-        }
-        previousPosition = position;
+        Glide
+                .with(context)
+                .load(gallaryList.get(position).url)
+                .placeholder(R.drawable.image_no)
+                .crossFade()
+                .into(holder.imageView);
         holder.imageViewDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //MainActivity.vibe.vibrate(12);
+                view = v;
                 isclick = true;
+                certificate_position = position;
                 Toast.makeText(context, "Downloading.... ", Toast.LENGTH_SHORT).show();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("mta");
                 myRef.child("certificate_pdf").child("" + position).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        String url = dataSnapshot.getValue().toString();
-                        //Toast.makeText(context, url, Toast.LENGTH_SHORT).show();
-                        if (isclick) {
-                            new DownloadFile().execute(url, "certificate" + position + ".pdf");
-                            isclick = false;
+                        if (dataSnapshot.exists()) {
+                            String url = dataSnapshot.getValue().toString();
+                            if (isclick) {
+                                new DownloadFile().execute(url, "certificate" + position + ".pdf");
+                                isclick = false;
+                            }
+                        } else {
+                            Toast.makeText(context, "item not found (database empty)", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -124,7 +107,26 @@ public class CertificationAdapter extends RecyclerView.Adapter<CertificationAdap
         return gallaryList.size();
     }
 
-    class DownloadFile extends AsyncTask<String, String, Void> {
+    class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView tvHeading;
+        TextView tvDescription;
+        TextView tvCode;
+        ImageView imageView;
+        ImageView imageViewDownload;
+
+        MyViewHolder(View itemView) {
+            super(itemView);
+            tvHeading = (TextView) itemView.findViewById(R.id.title);
+            tvDescription = (TextView) itemView.findViewById(R.id.description);
+            tvCode = (TextView) itemView.findViewById(R.id.code);
+            imageView = (ImageView) itemView.findViewById(R.id.imageView);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageViewDownload = (ImageView) itemView.findViewById(R.id.imgdownload);
+
+        }
+    }
+
+    private class DownloadFile extends AsyncTask<String, String, Void> {
         private static final int MEGABYTE = 1024 * 1024;
         ProgressDialog progressDialog;
 
@@ -133,7 +135,7 @@ public class CertificationAdapter extends RecyclerView.Adapter<CertificationAdap
             super.onPreExecute();
             progressDialog = new ProgressDialog(context);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setIndeterminate(false);
+            progressDialog.setIndeterminate(true);
             progressDialog.setMax(100);
             progressDialog.setMessage("Downloading.....");
             progressDialog.setCancelable(false);
@@ -145,15 +147,34 @@ public class CertificationAdapter extends RecyclerView.Adapter<CertificationAdap
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressDialog.hide();
-            Toast.makeText(context, "Download successfull", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar
+                    .make(view, "Download successfull!!!", Snackbar.LENGTH_LONG)
+                    .setAction("OPEN", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            viewPDF();
+                        }
+                    });
+            snackbar.setActionTextColor(Color.WHITE);
+            snackbar.show();
         }
 
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
             progressDialog.setProgress(Integer.parseInt(values[0]));
+            progressDialog.setIndeterminate(false);
         }
 
+        void viewPDF() {
+            String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+            File folder = new File(extStorageDirectory, "MTA");
+            File pdfFile = new File(folder, "certificate" + certificate_position + ".pdf");
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            context.startActivity(intent);
+        }
         @Override
         protected Void doInBackground(String... strings) {
             String fileUrl = strings[0];
@@ -180,7 +201,7 @@ public class CertificationAdapter extends RecyclerView.Adapter<CertificationAdap
                 int totalSize = urlConnection.getContentLength();
                 long total = 0;
                 byte[] buffer = new byte[MEGABYTE];
-                int bufferLength = 0;
+                int bufferLength;
                 while ((bufferLength = inputStream.read(buffer)) > 0) {
                     total += bufferLength;
                     fileOutputStream.write(buffer, 0, bufferLength);

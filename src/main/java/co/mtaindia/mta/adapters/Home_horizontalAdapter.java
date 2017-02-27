@@ -7,9 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
-import co.mtaindia.mta.Picasso.PicasoClient;
 import co.mtaindia.mta.R;
 import co.mtaindia.mta.beans.Home_horizontalBean;
 
@@ -19,22 +20,15 @@ import co.mtaindia.mta.beans.Home_horizontalBean;
 
 public class Home_horizontalAdapter extends RecyclerView.Adapter<Home_horizontalAdapter.MyViewHolder> {
     private List<Home_horizontalBean> gallaryList;
-    Context context;
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public ImageView imageView;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.horizontal_img);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        }
-    }
-
-
+    private Context context;
+    private Home_horizontalAdapter.ClickListener clickListener;
     public Home_horizontalAdapter(List<Home_horizontalBean> gList, Context c) {
         this.gallaryList = gList;
         this.context = c;
+    }
+
+    public void setClickListener(Home_horizontalAdapter.ClickListener clickListener) {
+        this.clickListener = clickListener;
     }
 
     @Override
@@ -45,12 +39,40 @@ public class Home_horizontalAdapter extends RecyclerView.Adapter<Home_horizontal
     }
 
     @Override
-    public void onBindViewHolder(Home_horizontalAdapter.MyViewHolder holder, int position) {
-        PicasoClient.downLoadImg(context, gallaryList.get(position).url, holder.imageView);
+    public void onBindViewHolder(final Home_horizontalAdapter.MyViewHolder holder, int position) {
+        Glide
+                .with(context)
+                .load(gallaryList.get(position).url)
+                .placeholder(R.drawable.image_no)
+                .crossFade()
+                .into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
         return gallaryList.size();
+    }
+
+    public interface ClickListener {
+        void itemClicked(View v, int position);
+    }
+
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public ImageView imageView;
+
+        MyViewHolder(View itemView) {
+            super(itemView);
+            imageView = (ImageView) itemView.findViewById(R.id.horizontal_img);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (clickListener != null) {
+                clickListener.itemClicked(v, getPosition());
+            }
+        }
+
     }
 }
