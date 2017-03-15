@@ -2,8 +2,8 @@
   "project_info": {
     "project_number": "63577342034",
     "firebase_url": "https://mtafirebaseproject.firebaseio.com",
-    "project_id": "mtafirebaseproject",
-    "storage_bucket": "mtafirebaseproject.appspot.com"
+    "project_id": "xyz",
+    "storage_bucket": "abc.appspot.com"
   },
   "client": [
     {
@@ -15,21 +15,21 @@
       },
       "oauth_client": [
         {
-          "client_id": "63577342034-l92divj9dbrccng3bpeiiq7ndacvk29o.apps.googleusercontent.com",
+          "client_id": "abc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "co.mtaindia.mta",
-            "certificate_hash": "6115FB91B746D95655ABDEE21A1A8D5EA87CF4C0"
+            "certificate_hash": "xxxxxxxxxxx"
           }
         },
         {
-          "client_id": "63577342034-jm40g8t78rt0e7ge4o0ijvj3iufnpi6r.apps.googleusercontent.com",
+          "client_id": "abc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC7b72zCYaEHU8K228EdRZ1-sXKmbBbUXk"
+          "current_key": "abcccc"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "63577342034-jm40g8t78rt0e7ge4o0ijvj3iufnpi6r.apps.googleusercontent.com",
+              "client_id": "xxx.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
